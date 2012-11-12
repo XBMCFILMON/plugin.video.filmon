@@ -1,20 +1,25 @@
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+'''
+    FilmOn plugin for XBMC
+    Copyright (C) 2012 FilmOn.com
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+'''
 
 
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
-
-import urllib,urllib2,sys,re,xbmcplugin,xbmcgui,xbmcaddon,xbmc,base64,datetime,os,time
+import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,xbmc,base64,datetime,os,time
+import sys
 from datetime import date
 from datetime import datetime
 import settings
@@ -25,6 +30,7 @@ from t0mm0.common.net import Net
 net = Net()
 ADDON = xbmcaddon.Addon(id='plugin.video.FilmOn')
 resolution=ADDON.getSetting('res')
+language = ADDON.getLocalizedString
 
 channelist=settings.channels()
 #Global Constants
@@ -107,8 +113,8 @@ def CATEGORIES():
 def Channels(name,url):
         if ADDON.getSetting('firstrun') == 'false':
                 dialog = xbmcgui.Dialog()
-                if dialog.yesno('FilmOn Information','          DO YOU HAVE A [COLOR yellow][B]FILMON[/B][/COLOR] ACCOUNT ?','','         [COLOR yellow][B]WOULD YOU LIKE TO LOGIN OR SIGN UP ?[/B][/COLOR]','NO THANKS','LOGIN/SIGN UP'):
-                        if dialog.yesno('FilmOn Information','','   ','                       [B]LOGIN OR SIGN UP ?[/B]','LOGIN','SIGN UP'):
+                if dialog.yesno(language(30021),language(30022),'',language(30023),language(30024),language(30025)):
+                        if dialog.yesno(language(30021),'','   ',language(30026),language(30027),language(30028)):
                                 keyemail = None
                                 keyboard = xbmc.Keyboard('', 'E-mail')
                                 keyboard.doModal()
@@ -136,7 +142,7 @@ def Channels(name,url):
                                             ADDON.setSetting(id='firstrun', value='true')
                                             ADDON.setSetting(id='filmon', value='true')
                                 except:
-                                        dialog.ok("Registration Failed", "REGISTRATION FAILED EXIT FILMON AND TRY AGAIN", "IF THE PROBLEM PERSISTS PLEASE SIGN UP ONLINE", "                     [COLOR yellow][B]WWW.FILMON.COM[/B][/COLOR] ")    
+                                        dialog.ok(language(30021), language(30029), language(30030),language(30031))    
                                 try:
                                     country=settings.country()
                                     city = ''
@@ -154,9 +160,9 @@ def Channels(name,url):
                                     response = urllib2.urlopen(req)
                                     link=response.read()
                                     if re.search('Accepted',link):                                                   
-                                        dialog.ok("Registration Complete", "        FOR YOUR SETTINGS TO TAKE EFFECT", "", "                     [COLOR yellow][B]PLEASE RESTART XBMC[/B][/COLOR] ")
+                                        dialog.ok(language(30021),language(30032), "",language(30033))
                                 except:
-                                        dialog.ok("Country Failed", "   COUNTRY REGISTRATION FAILED PLEASE LOGIN", "   ONLINE AND FILL COUNTRY AND CITY DETAILS IN", "                     [COLOR yellow][B]WWW.FILMON.COM[/B][/COLOR] ")
+                                        dialog.ok(language(30021),language(30034),language(30035),language(30036))
                         else:
                                 keyemail = None
                                 keyboard = xbmc.Keyboard('', 'E-mail')
@@ -177,7 +183,7 @@ def Channels(name,url):
                                 ADDON.setSetting('pass', value=keypassword)
                                 ADDON.setSetting(id='firstrun', value='true')
                                 ADDON.setSetting(id='filmon', value='true')
-                                dialog.ok("Please Restart", "        FOR YOUR SETTINGS TO TAKE EFFECT", "", "                     [COLOR yellow][B]PLEASE RESTART XBMC[/B][/COLOR] ")    
+                                dialog.ok(language(30021),language(30037), "",language(30038))    
                 else: 
                         ADDON.setSetting(id='firstrun', value='true')
         r='http://www.filmon.com/api/group/%s?session_key=%s' % (url,ses)
@@ -262,19 +268,19 @@ def MyRecordings(url):
             pageUrl = 'http://www.filmon.com/my/recordings'
             url= str(url)+' playpath='+str(playPath)+' app='+str(app)+' swfUrl='+str(swfUrl)+' tcUrl='+str(url)+' pageurl='+str(pageUrl)
             if status=='Recorded':
-	            status='[COLOR green][Recorded][/COLOR]'
+	            status=language(30050)
 	            name='%s %s' %(status,name)
 	            addLink(name,url,iconimage,description,'','','','delete','','',rec)
             if status=='Accepted':
-	            status='[COLOR yellow][Accepted][/COLOR]'
+	            status=language(30051)
 	            name='%s %s' %(status,name)
 	            addLink(name,url,iconimage,description,'','','','delete','','',rec)
             if status=='Recording':
-	            status='[COLOR yellow][Recording][/COLOR]'
+	            status=language(30052)
 	            name='%s %s' %(status,name)
 	            addLink(name,url,iconimage,description,'','','','delete','','',rec)
             if status=='Failed':
-	            status='[COLOR red][Failed][/COLOR]'
+	            status=language(30053)
 	            name='%s %s' %(status,name)
 	            addLink(name,url,iconimage,description,'','','','delete','','',rec)
             setView('movies', 'epg')
@@ -287,13 +293,13 @@ def Record(url,programme_id,startdate_time):
                 
                 if re.search('true',link ,re.IGNORECASE):
                         dialog = xbmcgui.Dialog()
-                        dialog.ok('FilmOn Information','[COLOR yellow][B]        THANK YOU ONCE RECORDED YOU WILL FIND[/B][/COLOR]',' ','[B]        THIS PROGRAMME IN YOUR MY RECORDINGS[/B]')
+                        dialog.ok(language(30021),language(30039),' ',language(30040))
                 if re.search('false',link ,re.IGNORECASE):
                         dialog = xbmcgui.Dialog()
-                        dialog.ok('FilmOn Information','[COLOR yellow][B]         SORRY BUT TO RECORD YOU WILL NEED TO[/B][/COLOR]',' ','[B]          HAVE A PAID SUBSCRIPTION TO RECORD[/B]')
+                        dialog.ok(language(30021),language(30041),' ',language(30042))
         except:
                 dialog = xbmcgui.Dialog()
-                dialog.ok('FilmOn Information','[COLOR yellow][B]         SORRY BUT TO RECORD YOU WILL NEED TO[/B][/COLOR]','                      [COLOR red][B]EITHER LOG IN!![/B][/COLOR]','[COLOR yellow][B]         OR HAVE A PAID SUBSCRIPTION TO RECORD[/B][/COLOR]')
+                dialog.ok(language(30021),language(3004),language(30043),language(30044))
                 
 def Delete(startdate_time):
         url='http://www.filmon.com/api/dvr-remove?session_key=%s&recording_id=%s'%(ses,startdate_time)
@@ -301,13 +307,13 @@ def Delete(startdate_time):
                 link = net.http_GET(url).content
                 if re.search('Task is removed',link ,re.IGNORECASE):
                         dialog = xbmcgui.Dialog()
-                        dialog.ok('FilmOn Information','[B]                           THANK YOU[/B]','','[COLOR yellow][B]  YOUR PROGRAMME HAS NOW BEEN DELETED[/B][/COLOR]')
+                        dialog.ok(language(30021),language(30045),'',language(30046))
                 else: 
                         dialog = xbmcgui.Dialog()
-                        dialog.ok('FilmOn Information','','[COLOR yellow][B]   SORRY BUT THERE HAS BEEN AN ERROR[/B][/COLOR]','')
+                        dialog.ok(language(30021),'',language(30047),'')
         except:
                 dialog = xbmcgui.Dialog()
-                dialog.ok('FilmOn Information','','[COLOR yellow][B]    SORRY BUT THERE HAS BEEN AN ERROR[/B][/COLOR]','')
+                dialog.ok(language(30021),'',language(30047),'')
                 
 def EPG(url,iconimage):
                 url= 'http://www.filmon.com/api/channel/%s?session_key=%s' % (url,ses)
@@ -360,13 +366,13 @@ def favourite(url):
     dialog = xbmcgui.Dialog()
     grp='http://www.filmon.com/api/favorites?session_key=%s&channel_id=%s&run=add'%(ses,url)
     link = net.http_GET(grp).content
-    dialog.ok('THANK YOU','[COLOR yellow][B]THIS CHANNEL HAS BEEN ADDED FAVORITES[/B][/COLOR]',' ','')  
+    dialog.ok(language(30021),language(30048),' ','')  
 
 def deletefavourite(url):
     dialog = xbmcgui.Dialog()
     grp='http://www.filmon.com/api/favorites?session_key=%s&channel_id=%s&run=remove'%(ses,url)
     link = net.http_GET(grp).content
-    dialog.ok('THANK YOU','[COLOR yellow][B]THIS CHANNEL HAS BEEN DELETED[/B][/COLOR]',' ','[B][/B]')  
+    dialog.ok(language(30021),language(30049),' ','')  
                 
 def get_params():
         param=[]
