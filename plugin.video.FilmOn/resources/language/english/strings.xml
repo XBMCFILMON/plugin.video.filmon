@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<strings>
+	<!-- XBMC -->
+	<string id="30010">FILMON ACCOUNT</string>
+	<string id="30011">Email</string>
+    <string id="30012">Password</string>
+	<!-- Res -->
+	<string id="30013">Preferred Resolution:</string>
+	<string id="30014">Enable Automatic View</string>
+	<string id="30015">EPG View</string>
+	<string id="30016">EVERY THING ELSE</string>	
+	<string id="30017">LOW</string>
+	<string id="30018">HIGH</string>	
+	<string id="30019">FilmOn Settings</string>
+	<string id="30020">Auto-View</string>	
+</strings>
+
