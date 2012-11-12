@@ -255,7 +255,6 @@ def MyRecordings(url):
             regex = re.compile('rtmp://(.+?)/(.+?)/(.+?)/(.+?)/(.+?)/(.+?)/(.+?)<')
             match1 = regex.search(foregex)
             time=float(time)
-            name = name.encode('utf-8')
             desc = desc.encode('utf-8')
             d=date.fromtimestamp(time).strftime("%d/%m/%Y")
             description='[B][%s][/B]\n%s'%(d,desc)
@@ -270,18 +269,22 @@ def MyRecordings(url):
             if status=='Recorded':
 	            status=language(30050)
 	            name='%s %s' %(status,name)
+	            name = name.encode('utf-8')
 	            addLink(name,url,iconimage,description,'','','','delete','','',rec)
             if status=='Accepted':
 	            status=language(30051)
 	            name='%s %s' %(status,name)
+	            name = name.encode('utf-8')
 	            addLink(name,url,iconimage,description,'','','','delete','','',rec)
             if status=='Recording':
 	            status=language(30052)
 	            name='%s %s' %(status,name)
+	            name = name.encode('utf-8')
 	            addLink(name,url,iconimage,description,'','','','delete','','',rec)
             if status=='Failed':
 	            status=language(30053)
 	            name='%s %s' %(status,name)
+	            name = name.encode('utf-8')
 	            addLink(name,url,iconimage,description,'','','','delete','','',rec)
             setView('movies', 'epg')
                 
