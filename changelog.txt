@@ -1,3 +1,6 @@
+v3.1.7
+Finished All translatable strings And Ready for Push
+
 v3.1.6
 Added Languages
 
