@@ -1,3 +1,6 @@
+v3.1.6
+Added Languages
+
 v3.1.5
 Fixed Script error
 
