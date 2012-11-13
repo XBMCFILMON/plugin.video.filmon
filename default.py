@@ -403,19 +403,19 @@ def addDir(name,url,mode,iconimage,description, favorites, deletefav, record, de
         liz.setInfo( type="Video", infoLabels={ "Title": name, "Plot":description} )
         menu = []
         if favorites:
-              menu.append(('Add To Favorite Channel','XBMC.RunPlugin(%s?name=None&url=%s&mode=10&iconimage=None&description=None)'%(sys.argv[0],url)))
+              menu.append((language(30054),'XBMC.RunPlugin(%s?name=None&url=%s&mode=10&iconimage=None&description=None)'%(sys.argv[0],url)))
               liz.addContextMenuItems(items=menu, replaceItems=True)
         if deletefav:
-              menu.append(('Delete From Favorite Channel','XBMC.RunPlugin(%s?name=None&url=%s&mode=11&iconimage=None&description=None)'%(sys.argv[0],url)))
+              menu.append((language(30055),'XBMC.RunPlugin(%s?name=None&url=%s&mode=11&iconimage=None&description=None)'%(sys.argv[0],url)))
               liz.addContextMenuItems(items=menu, replaceItems=True)
         if record:
-              menu.append(('Record Programme','XBMC.RunPlugin(%s?name=None&url=%s&mode=6&iconimage=None&description=None&programme_id=%s&startdate_time=%s)'%(sys.argv[0],url,programme_id,startdate_time)))
+              menu.append((language(30056),'XBMC.RunPlugin(%s?name=None&url=%s&mode=6&iconimage=None&description=None&programme_id=%s&startdate_time=%s)'%(sys.argv[0],url,programme_id,startdate_time)))
               liz.addContextMenuItems(items=menu, replaceItems=True)
         if deleterecord:
-              menu.append(('Delete Recording','XBMC.RunPlugin(%s?name=None&url=None&mode=7&iconimage=None&description=None&startdate_time=%s)'%(sys.argv[0],startdate_time)))
+              menu.append((language(30057),'XBMC.RunPlugin(%s?name=None&url=None&mode=7&iconimage=None&description=None&startdate_time=%s)'%(sys.argv[0],startdate_time)))
               liz.addContextMenuItems(items=menu, replaceItems=True)
         if tvguide:
-              menu.append(('TV Guide','XBMC.Container.Update(%s?name=None&url=%s&mode=8&iconimage=%s&description=None)'%(sys.argv[0],url,iconimage)))
+              menu.append((language(30058),'XBMC.Container.Update(%s?name=None&url=%s&mode=8&iconimage=%s&description=None)'%(sys.argv[0],url,iconimage)))
               liz.addContextMenuItems(items=menu, replaceItems=True)
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
         return ok   
@@ -427,20 +427,20 @@ def addLink(name,url,iconimage,description, favorites, deletefav, record, delete
         liz.setProperty("IsPlayable","true")
         menu = []
         if favorites:
-              menu.append(('Add To Favorite Channel','XBMC.RunPlugin(%s?name=None&url=%s&mode=10&iconimage=None&description=None)'%(sys.argv[0],url)))
+              menu.append((language(30054),'XBMC.RunPlugin(%s?name=None&url=%s&mode=10&iconimage=None&description=None)'%(sys.argv[0],url)))
               liz.addContextMenuItems(items=menu, replaceItems=True)
         if deletefav:
-              menu.append(('Delete From Favorite Channel','XBMC.RunPlugin(%s?name=None&url=%s&mode=11&iconimage=None&description=None)'%(sys.argv[0],url)))
+              menu.append((language(30055)'XBMC.RunPlugin(%s?name=None&url=%s&mode=11&iconimage=None&description=None)'%(sys.argv[0],url)))
               liz.addContextMenuItems(items=menu, replaceItems=True)
         if record:
-              menu.append(('Record Programme','XBMC.RunPlugin(%s?name=None&url=%s&mode=6&iconimage=None&description=None&pid=%s&st=%s)'%(sys.argv[0],url,programme_id,startdate_time)))
+              menu.append((language(30056),'XBMC.RunPlugin(%s?name=None&url=%s&mode=6&iconimage=None&description=None&pid=%s&st=%s)'%(sys.argv[0],url,programme_id,startdate_time)))
               liz.addContextMenuItems(items=menu, replaceItems=True)
         if deleterecord:
-              menu.append(('Delete Recording','XBMC.RunPlugin(%s?name=None&url=None&mode=7&iconimage=None&description=None&startdate_time=%s)'%(sys.argv[0],startdate_time)))
+              menu.append((language(30057),'XBMC.RunPlugin(%s?name=None&url=None&mode=7&iconimage=None&description=None&startdate_time=%s)'%(sys.argv[0],startdate_time)))
               liz.addContextMenuItems(items=menu, replaceItems=True)
               
         if tvguide:
-              menu.append(('TV Guide','XBMC.Container.Update(%s?name=None&url=%s&mode=8&iconimage=%s&description=None)'%(sys.argv[0],url,iconimage)))
+              menu.append((language(30058),'XBMC.Container.Update(%s?name=None&url=%s&mode=8&iconimage=%s&description=None)'%(sys.argv[0],url,iconimage)))
               liz.addContextMenuItems(items=menu, replaceItems=True)
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=url,listitem=liz,isFolder=False)
         return ok 
