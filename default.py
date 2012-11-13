@@ -28,7 +28,7 @@ import json
 from threading import Timer
 from t0mm0.common.net import Net
 net = Net()
-ADDON = xbmcaddon.Addon(id='plugin.video.FilmOn')
+ADDON = xbmcaddon.Addon(id='plugin.video.filmon')
 resolution=ADDON.getSetting('res')
 language = ADDON.getLocalizedString
 
