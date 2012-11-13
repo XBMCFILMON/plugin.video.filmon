@@ -1,5 +1,8 @@
-3.1.4
-Everyuthing now transalatable
+v3.15
+Fixed Script error
+
+v3.1.4
+Everything now transalatable
 changed FilmOn to filmon
 
 v3.1.3
