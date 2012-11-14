@@ -94,9 +94,9 @@ ses = xbmcgui.Window(10000).getProperty("SessionID")
                 
 def CATEGORIES():       
         if ADDON.getSetting('filmon') == 'true':
-                addDir('My Recordings','url',5,'http://www.filmon.com/tv/themes/filmontv/img/mobile/filmon-logo-stb.png','','','','','','','','')
+                addDir(language(30059),'url',5,'http://www.filmon.com/tv/themes/filmontv/img/mobile/filmon-logo-stb.png','','','','','','','','')
         if ADDON.getSetting('filmon') == 'true':
-                        addDir('Favourites','url',9,'http://www.filmon.com/tv/themes/filmontv/images/category/favorites_stb.png','','','','','','','','')                                
+                        addDir(language(30060),'url',9,'http://www.filmon.com/tv/themes/filmontv/images/category/favorites_stb.png','','','','','','','','')                                
         grp='http://www.filmon.com/api/groups?session_key=%s' % (ses)
         link = net.http_GET(grp).content
         data = json.loads(link)
