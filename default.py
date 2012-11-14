@@ -18,8 +18,7 @@
 
 
 
-import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,xbmc,base64,datetime,os,time
-import sys
+import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,xbmc,os
 from datetime import date
 from datetime import datetime
 import settings
@@ -200,11 +199,14 @@ def Channels(name,url):
             setView('episodes', 'default') 
             
     
-def getStream(channels,resolution):
+def getStream(channels,resolution,watch_timeout):
+    watch_timeout=str(watch_timeout)
     if resolution == '0':
         quality  = 'LOW'
+        if len(watch_timeout)>5:
+            quality  = 'HIGH'
     else:
-        quality = 'HIGH'
+        quality  = 'HIGH'
 
     for item in channels:
         if item['quality'].upper() == quality:
@@ -217,7 +219,8 @@ def FilmOn(url,iconimage):
         link = net.http_GET(url).content
         data = json.loads(link)
         channels= data['streams']
-        stream = getStream(channels,resolution)
+        watch_timeout= data['watch-timeout']
+        stream = getStream(channels,resolution,watch_timeout)
         if stream is not None:
             foregex= stream['url']+'<'
             playpath=stream['name']
