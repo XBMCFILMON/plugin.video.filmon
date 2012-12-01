@@ -1,3 +1,6 @@
+v3.2.0
+Fixed Encode Error
+
 V3.1.9
 Added Auto Select Stream Resolution
 Clean Up Code
