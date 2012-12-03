@@ -1,3 +1,7 @@
+v3.2.1
+Fixed Recordings
+Changed So Player Not Directly Called
+
 v3.2.0
 Fixed Encode Error
 
