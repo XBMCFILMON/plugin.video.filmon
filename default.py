@@ -260,23 +260,12 @@ def GET_RECORDINGS(url):
             channel = field['channel_id']
             time = field['time_start']
             status = field['status']
-            playPath = field['stream_name']
             url= field['stream_url']
-            foregex = field['stream_url']+'<'
-            regex = re.compile('rtmp://(.+?)/(.+?)/(.+?)/(.+?)/(.+?)/(.+?)/(.+?)<')
-            match1 = regex.search(foregex)
             time=float(time)
             desc = desc.encode('utf-8')
             d=date.fromtimestamp(time).strftime("%d/%m/%Y")
             description='[B][%s][/B]\n%s'%(d,desc)
             iconimage='https://static.filmon.com/couch/channels/%s/extra_big_logo.png' % str(channel)
-            try:
-	            app = '%s/%s/%s/%s/%s/%s' %(match1.group(2), match1.group(3),match1.group(4),match1.group(5),match1.group(6),match1.group(7))
-            except:
-	            app = ''
-            swfUrl= 'http://www.filmon.com/tv/modules/FilmOnTV/files/flashapp/filmon/FilmonPlayer.swf'
-            pageUrl = 'http://www.filmon.com/my/recordings'
-            url= str(url)+' playpath='+str(playPath)+' app='+str(app)+' swfUrl='+str(swfUrl)+' tcUrl='+str(url)+' pageurl='+str(pageUrl)
             if status=='Recorded':
 	            status=language(30050)
 	            name='%s %s' %(status,name)
