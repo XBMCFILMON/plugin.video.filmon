@@ -100,7 +100,6 @@ def GROUPS():
         if ADDON.getSetting('filmon') == 'true':
                         ADD_DIRECTORY_ITEM(language(30060),'url',9,'http://www.filmon.com/tv/themes/filmontv/images/category/favorites_stb.png','','','','','','','','')                                
         grp='http://www.filmon.com/api/groups?session_key=%s' % (ses)
-        analytics
         link = net.http_GET(grp).content
         data = json.loads(link)
         for field in data:
@@ -364,11 +363,11 @@ def GET_FAVOURITES(url):
     data=json.loads(link)
     result=data['result']
     for field in result:
-        url=field['channel_id']
-        iconimage='http://static.filmon.com/couch/channels/%s/extra_big_logo.png'%(url)
-        name=RETURN_CHANNEL_NAME_FAVOURITES(url)
-        url = GET_STREAMS(url)
-        ADD_STREAM_LINK(name,url,iconimage,'','','delete','','','tvguide','','')
+        programme_id=field['channel_id']
+        iconimage='http://static.filmon.com/couch/channels/%s/extra_big_logo.png'%(programme_id)
+        name=RETURN_CHANNEL_NAME_FAVOURITES(programme_id)
+        url = GET_STREAMS(programme_id)
+        ADD_STREAM_LINK(name,url,iconimage,'','','delete','','','tvguide',programme_id,'')
         setView('movies', 'default') 
                 
 def ADD_FAVOURITES(url):
