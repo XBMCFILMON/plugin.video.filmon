@@ -26,6 +26,8 @@ from hashlib import md5
 import json
 from threading import Timer
 from t0mm0.common.net import Net
+
+
 net = Net()
 ADDON = xbmcaddon.Addon(id='plugin.video.filmon')
 resolution=ADDON.getSetting('res')
@@ -98,6 +100,7 @@ def GROUPS():
         if ADDON.getSetting('filmon') == 'true':
                         ADD_DIRECTORY_ITEM(language(30060),'url',9,'http://www.filmon.com/tv/themes/filmontv/images/category/favorites_stb.png','','','','','','','','')                                
         grp='http://www.filmon.com/api/groups?session_key=%s' % (ses)
+        analytics
         link = net.http_GET(grp).content
         data = json.loads(link)
         for field in data:
@@ -352,6 +355,8 @@ def RETURN_CHANNEL_NAME_FAVOURITES(url):
     name=data['title']
     name=name.encode('utf-8')
     return name
+    
+    
 
 def GET_FAVOURITES(url):
     grp='http://www.filmon.com/api/favorites?session_key=%s&run=get'% (ses)
@@ -362,7 +367,8 @@ def GET_FAVOURITES(url):
         url=field['channel_id']
         iconimage='http://static.filmon.com/couch/channels/%s/extra_big_logo.png'%(url)
         name=RETURN_CHANNEL_NAME_FAVOURITES(url)
-        ADD_DIRECTORY_ITEM(name,url,2,iconimage,'','','delete','','','tvguide','','')
+        url = GET_STREAMS(url)
+        ADD_STREAM_LINK(name,url,iconimage,'','','delete','','','tvguide','','')
         setView('movies', 'default') 
                 
 def ADD_FAVOURITES(url):
