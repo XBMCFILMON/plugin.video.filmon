@@ -252,8 +252,10 @@ def GET_STREAMS(url):
             except:
                     pass
             try:
-                    match1 = regex.search(url1)
+                    regex = re.compile('rtmp://(.+?)/(.+?)id=(.+?)"')
+                    match1 = regex.search(foregex)
                     app = '%sid=%s' %(match1.group(2), match1.group(3))
+                    url= stream['url']+playpath
                     swfUrl='http://www.filmon.com/tv/modules/FilmOnTV/files/flashapp/filmon/FilmonPlayer.swf?v=28'
             except:
                     pass
