@@ -237,7 +237,7 @@ def GET_STREAMS(url):
             name=stream['quality']
             if re.search('m4v',playpath,re.IGNORECASE):
                     app = 'vod'
-                    url= stream['url']+playpath
+                    url= stream['url']+'/'+playpath
                     swfUrl= 'http://www.filmon.com/tv/modules/FilmOnTV/files/flashapp/filmon/FilmonPlayer.swf'
             else:
                     try:
@@ -260,7 +260,7 @@ def GET_STREAMS(url):
                             regex = re.compile('rtmp://(.+?)/(.+?)id=(.+?)<')
                             match1 = regex.search(foregex)
                             app = '%sid=%s' %(match1.group(2), match1.group(3))
-                            url= stream['url']+playpath
+                            url= stream['url']+'/'+playpath
                             swfUrl='http://www.filmon.com/tv/modules/FilmOnTV/files/flashapp/filmon/FilmonPlayer.swf?v=28'
                     except:
                             pass
