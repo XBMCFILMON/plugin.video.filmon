@@ -226,6 +226,8 @@ def GET_STREAM_RESOLUTION(channels,resolution,watch_timeout):
      
                       
 def GET_STREAMS(url):
+        dp = xbmcgui.DialogProgress()
+        dp.create("FilmOn",'Please Wait While We Load Your Stream','')
         ses=GET_SESSION_ID()
         url='http://www.filmon.com/api/channel/%s?session_key=%s' % (url,ses)
         print '============ GETTING NEW SESSION_ID = %s  =================='%(ses)
@@ -239,7 +241,7 @@ def GET_STREAMS(url):
             playpath=stream['name']
             name=stream['quality']
             if re.search('m4v',playpath ,re.IGNORECASE):
-                app = 'vod'
+                app = 'vodlast'
                 swfUrl= 'http://www.filmon.com/tv/modules/FilmOnTV/files/flashapp/filmon/FilmonPlayer.swf'
                 url= stream['url']+'/'+playpath
             else:
@@ -470,10 +472,11 @@ def ADD_DIRECTORY_ITEM(name,url,mode,iconimage,description, favorites, deletefav
         if tvguide:
               menu.append((language(30058),'XBMC.Container.Update(%s?name=None&url=%s&mode=8&iconimage=%s&description=None)'%(sys.argv[0],programme_id,iconimage)))
               liz.addContextMenuItems(items=menu, replaceItems=True)
-        if mode==12:
-              ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=False)
-        else:
+              
+        if not mode==12:
               ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
+        else:
+              ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=False)
         return ok   
                      
 def PLAY_STREAM_LINK(name,url,iconimage,description, favorites, deletefav, record, deleterecord,tvguide,programme_id,startdate_time):
