@@ -2,7 +2,6 @@ v3.2.8
 Fix For New Added Channels
 Better Way Of Handling If Directory Is Folder Or Not
 
-
 v3.2.7
 Bug Fix
 
