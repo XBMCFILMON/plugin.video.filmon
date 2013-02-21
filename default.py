@@ -44,6 +44,51 @@ passs=ADDON.getSetting('pass')
 password = md5(passs).hexdigest()
 keep_alive='http://www.filmon.com/api/keep-alive?session_key='
 filmon='http://www.filmon.com/tv/themes/filmontv/img/mobile/filmon-logo-stb.png'
+hubpath = xbmc.translatePath(os.path.join('special://home/addons', ''))
+hubrepo=os.path.join(hubpath, 'repository.xbmchub')
+mikey=os.path.join(hubpath, 'repository.Mikey1234')
+
+if os.path.exists(mikey)==True: 
+	for root, dirs, files in os.walk(mikey):
+	    for f in files:
+	        os.unlink(os.path.join(root, f))
+	    for d in dirs:
+	        shutil.rmtree(os.path.join(root, d))
+	os.rmdir(mikey)
+	
+def DownloaderClass(url,dest):
+    dp = xbmcgui.DialogProgress()
+    dp.create("FilmON","Please Wait While We Get You Prepared",'For FilmOns New Repo ','Thank You For Your Patience')
+    urllib.urlretrieve(url,dest,lambda nb, bs, fs, url=url: _pbhook(nb,bs,fs,url,dp))
+ 
+def _pbhook(numblocks, blocksize, filesize, url=None,dp=None):
+    try:
+        percent = min((numblocks*blocksize*100)/filesize, 100)
+        print 'Downloaded '+str(percent)+'%'
+        dp.update(percent)
+    except:
+        percent = 100
+        dp.update(percent)
+    if dp.iscanceled(): 
+        print "DOWNLOAD CANCELLED" # need to get this part working
+        dp.close()
+try:  
+    dialog = xbmcgui.Dialog()
+    dialog.ok("FilmON", "FilmOn Is Moving Repo We Will Download", "The New Repo To get You Prepared")
+    if os.path.exists(hubrepo)==False: 
+        print '############################################################        INSTALL XBMCHUB REPO        ###############################################################'
+        url = 'http://xbmc-hub-repo.googlecode.com/svn/addons/repository.xbmchub/repository.xbmchub-1.0.1.zip'
+        path = xbmc.translatePath(os.path.join('special://home/addons','packages'))
+        lib=os.path.join(path, 'repository.xbmchub-1.0.1.zip')
+        DownloaderClass(url,lib)
+        addonfolder = xbmc.translatePath(os.path.join('special://home/addons',''))
+        xbmc.executebuiltin("XBMC.Extract(%s,%s)"%(lib,addonfolder))
+        dialog = xbmcgui.Dialog()
+        dialog.ok("FilmON", "Please Reboot To Take Effect", "Brought To You By XBMCHUB.COM")
+except:
+    pass        
+	
+
 def keepAlive():
     validWin = xbmcgui.getCurrentWindowId() in [10025, 12005]
     if not validWin:
@@ -226,8 +271,6 @@ def GET_STREAM_RESOLUTION(channels,resolution,watch_timeout):
      
                       
 def GET_STREAMS(url):
-        dp = xbmcgui.DialogProgress()
-        dp.create("FilmOn",'Please Wait While We Load Your Stream','')
         ses=GET_SESSION_ID()
         url='http://www.filmon.com/api/channel/%s?session_key=%s' % (url,ses)
         print '============ GETTING NEW SESSION_ID = %s  =================='%(ses)
@@ -485,11 +528,14 @@ def PLAY_STREAM_LINK(name,url,iconimage,description, favorites, deletefav, recor
         liz=xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconimage)
         liz.setInfo( type="Video", infoLabels={ "Title": name, "Plot": description } )
         liz.setProperty("IsPlayable","true")
+        dp = xbmcgui.DialogProgress()
+        dp.create("FilmOn",'Please Wait While We Load Your Stream','')
         url = GET_STREAMS(programme_id)
         pl = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
         pl.clear()
         pl.add(url, liz)
         xbmc.Player(xbmc.PLAYER_CORE_MPLAYER).play(pl)
+        dp.close()
         
         
 def ADD_RECORD_LINK(name,url,iconimage,description, favorites, deletefav, record, deleterecord,tvguide,programme_id,startdate_time):
